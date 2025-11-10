@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('model_has_roles', function (Blueprint $table) {
-            $table->unsignedBigInteger('team_id')->nullable()->index();
             $table->unique(['model_id', 'model_type', 'role_id', 'team_id'], 'model_role_team_unique');
+            $table->unsignedBigInteger('team_id')->nullable()->change();
         });
 
         Schema::table('model_has_permissions', function (Blueprint $table) {
-            $table->unsignedBigInteger('team_id')->nullable()->index();
             $table->unique(['model_id', 'model_type', 'permission_id', 'team_id'], 'model_permission_team_unique');
+            $table->unsignedBigInteger('team_id')->nullable()->change();
         });
 
         Schema::table('roles', function (Blueprint $table) {
@@ -34,12 +34,12 @@ return new class extends Migration
     {
         Schema::table('model_has_roles', function (Blueprint $table) {
             $table->dropUnique('model_role_team_unique');
-            $table->dropColumn('team_id');
+            // $table->dropColumn('team_id');
         });
 
         Schema::table('model_has_permissions', function (Blueprint $table) {
             $table->dropUnique('model_permission_team_unique');
-            $table->dropColumn('team_id');
+            // $table->dropColumn('team_id');
         });
 
         Schema::table('roles', function (Blueprint $table) {
