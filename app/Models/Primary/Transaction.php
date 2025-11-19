@@ -7,11 +7,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Primary\TransactionDetail;
 
+use App\Models\Traits\BelongsToSpace;
+
 
 
 class Transaction extends Model
 {
     use SoftDeletes;
+    use BelongsToSpace;
 
     protected $table = 'transactions';
 

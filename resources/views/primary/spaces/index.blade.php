@@ -11,7 +11,7 @@
 <x-crud.index-basic header="Spaces" 
                 model="space" 
                 table_id="indexTable"
-                :thead="['Code', 'Parent', 'Name', 'Address', 'Status', 'Notes', 'Actions']"
+                :thead="['ID', 'Code', 'Parent', 'Name', 'Address', 'Status', 'Notes', 'Actions']"
                 >
     <x-slot name="buttons">
         @if($user->can('space.spaces.crud', 'web'))
@@ -116,6 +116,7 @@
                 }
             },
             columns: [
+                {data: 'id', name: 'id'},
                 {data: 'code', name: 'code'},
                 {data: 'parent_display', name: 'parent_display'},
                 {data: 'name', name: 'name'},
