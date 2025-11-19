@@ -334,6 +334,9 @@ class TradeController extends Controller
             if(isset($validated['parent_id'])){ 
                 $data['parent_type'] = 'TX';
                 $data['parent_id'] = $validated['parent_id']; 
+            } else {
+                $data['parent_type'] = null;
+                $data['parent_id'] = null;
             }
 
             $journal = $this->tradeService->updateJournal($journal, $data, $validated['details']);

@@ -413,6 +413,7 @@
                 dataType: 'json',
                 paginate: true,
                 delay: 500,
+                allowClear: true,
                 data: function(params) {
                     return {
                         q: params.term,
@@ -444,6 +445,10 @@
             console.log(selected);
             
             $('#edit_parent_data').html(selected.text);
+        });
+
+        $('#parent_id_clear').click(function () {
+            $('#edit_parent_id').val("").trigger('change');
         });
     });
 </script>

@@ -31,6 +31,9 @@
                 <option value="">-- Select Trades --</option>
             </select>
             <label id="{{ $form['mode'] ?? '' }}_parent_data" class="text-xs text-gray-500"></label>
+
+            <br>
+            <label id="parent_id_clear" class="text-xs text-red-500">Hapus Induk</label>
         </x-div.box-input>
 
 
