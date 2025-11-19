@@ -26,6 +26,15 @@
 
         $list_files = array_merge($list_files, $child_files);
     }
+
+
+
+    $request = request();
+    $space_id = get_space_id($request, false);
+    $space_role = session('space_role') ?? null;
+    $allow_update = ($data->space_id == $space_id) ? ($space_role == 'admin' || $space_role == 'owner') : false;
+    $allow_duplicate = $allow_update ?? false;
+
 @endphp
 
 
@@ -181,5 +190,10 @@
 
 
     <h3 class="text-lg font-bold my-3">Actions</h3>
+    <div class="flex gap-3 justify-end mt-8">
+        @if($allow_duplicate)
+            <x-buttons.button-duplicate :route="route('journal_accounts.duplicate', $data->id)">Duplicate</x-buttons.button-duplicate>
+        @endif
+    </div>
     
     <div class="my-6 flex-grow border-t border-gray-300 dark:border-gray-700"></div>

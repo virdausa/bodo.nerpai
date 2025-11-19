@@ -72,6 +72,7 @@ Route::middleware([
     Route::get('journal_supplies/data', [JournalSupplyController::class, 'getData'])->name('journal_supplies.data');
     Route::resource('journal_supplies', JournalSupplyController::class);
 
+    Route::post('journal_accounts/duplicate/{id}', [JournalAccountController::class, 'duplicate'])->name('journal_accounts.duplicate');
     Route::get('journal_accounts/export', [JournalAccountController::class, 'exportData'])->name('journal_accounts.export');
     Route::get('journal_accounts/import', [JournalAccountController::class, 'importTemplate'])->name('journal_accounts.import_template');
     Route::post('journal_accounts/import', [JournalAccountController::class, 'importData'])->name('journal_accounts.import');
