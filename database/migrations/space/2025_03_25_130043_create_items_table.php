@@ -44,6 +44,12 @@ return new class extends Migration
             $table->text('description')->nullable();
 
             $table->json('files')->nullable();
+            $table->json('images')->nullable();
+            $table->json('tags')->nullable();
+            $table->json('links')->nullable();
+            $table->json('attributes')->nullable();
+            $table->json('options')->nullable();
+            $table->json('variants')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

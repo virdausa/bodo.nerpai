@@ -365,6 +365,15 @@ class ItemController extends Controller
     
 
 
+    public function edit(String $id)
+    {
+        $data = Item::with('transaction_details')->findOrFail($id);
+        
+        return view('primary.items.edit-web', compact('data'));
+    }
+
+
+
     public function update(Request $request, $id)
     {   
         $request_source = get_request_source($request);
@@ -381,10 +390,65 @@ class ItemController extends Controller
                 'notes' => 'nullable|string',
                 'description' => 'nullable|string',
                 'status' => 'nullable|string',
+
+                'old_images.*' => 'nullable|array',
+                'images.*' => 'nullable|file|max:2048',
+                
+                'tags' => 'nullable|string',
+                'links' => 'nullable|string',
             ]);
             
             $item = Item::findOrFail($id);
+
+
+
+            // handling images jika ada images masuk
+            if($request->hasFile('images')) {
+                // Ambil file lama yang masih dipertahankan
+                $oldImages = $request->input('old_images', []); // array path lama
+    
+                $finalImages = [];
+                foreach ($oldImages as $old_file) {
+                    $finalImages[] = [
+                        'name' => $old_file['name'],
+                        'path' => $old_file['path'],
+                        'size' => $old_file['size'],
+                    ];
+                }
+    
+                // Upload file baru
+                if ($request->hasFile('images')) {
+    
+                    foreach ($request->file('images') as $file) {
+                        $path = $file->store('uploads/items/' . $item->id , 'public');
+                        $finalImages[] = [
+                            'name' => $file->getClientOriginalName(),
+                            'path' => 'storage/'.$path,
+                            'size' => $file->getSize(),
+                        ];
+                    }
+                }
+    
+                $validatedData['images'] = $finalImages;
+            }
+
+            // dd($validatedData);
+            
+
+            // jika ada tags, lakukan decode
+            if($request->has('tags')){
+                $validatedData['tags'] = json_decode($validatedData['tags'], true) ?: [];
+            }
+
+            // jika ada links, lakukan decode
+            if($request->has('links')){
+                $validatedData['links'] = json_decode($validatedData['links'], true) ?: [];
+            }
+
+
+
             $item->update($validatedData);
+
         } catch (\Throwable $th) {
             if($request_source == 'api'){
                 return response()->json(['message' => $th->getMessage(), 'success' => false, 'data' => []], 500);
@@ -402,7 +466,7 @@ class ItemController extends Controller
             ]);
         }
 
-        return redirect()->route('items.index')->with('success', 'Item updated successfully');
+        return redirect()->route('items.show', $item->id)->with('success', 'Item updated successfully');
     }
 
 

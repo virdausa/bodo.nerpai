@@ -57,7 +57,7 @@
 
         // ajax get data show
         $.ajax({
-            url: "/api/trades/" + tx_id,
+            url: "/api/trades/public/" + tx_id,
             type: "GET",
             data: {
                 'page_show': 'show'

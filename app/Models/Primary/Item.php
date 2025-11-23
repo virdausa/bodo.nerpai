@@ -39,8 +39,20 @@ class Item extends Model
 
         'description',
         'files',
+        'images',
+        
+        'tags',
+        'links',
 
         'expected_lifetime',
+    ];
+
+
+    protected $casts = [
+        'files' => 'json',
+        'images' => 'json',
+        'tags' => 'json',
+        'links' => 'json',
     ];
 
 

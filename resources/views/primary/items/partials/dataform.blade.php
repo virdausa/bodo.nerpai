@@ -57,10 +57,14 @@
 
 
 
+<div class="grid grid-cols-3 sm:grid-cols-3 gap-6">
+    <div class="form-group mb-4">
+        <x-input-label for="tags">Tags</x-input-label>
+        <x-input-textarea name="tags" id="{{ $form['mode'] ?? '' }}_tags" class="w-full" placeholder="Optional Tags"></x-input-textarea>
+    </div>
 
-<!-- Actions -->
-<div class="flex justify-end space-x-4 mt-4">
-    <x-primary-button type="submit">{{ $form['id'] ?? 'Save' }}</x-primary-button>
-    <button type="button" @click="isOpen = false"
-        class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-700">Cancel</button>
+    <div class="form-group mb-4">
+        <x-input-label for="links">Links</x-input-label>
+        <x-input-textarea name="links" id="{{ $form['mode'] ?? '' }}_links" class="w-full" placeholder="Optional Links"></x-input-textarea>
+    </div>
 </div>

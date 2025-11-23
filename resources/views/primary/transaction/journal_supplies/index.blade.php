@@ -48,7 +48,7 @@
 
 
         <x-input-select name="space_select" id="space-select" class="filter-select">
-            <option value="">-- Filter Status --</option>
+            <option value="">-- Filter Space --</option>
             @foreach ($space_select_options as $key => $value)
                 <option value="{{ $key }}" {{ $space_select == $key ? 'selected' : '' }}>{{ $value }}</option>
             @endforeach
