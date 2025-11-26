@@ -158,8 +158,20 @@
                 },
                 
                 {
-                    data: 'actions', orderable: false, searchable: false
-                }
+                    data: 'actions', 
+                    orderable: false, 
+                    searchable: false,
+                    render: function(data, type, row, meta) {
+                        status = row.status;
+
+                        if(status == 'TX_DRAFT') {
+                            actions = "";
+                        }
+                        actions = data;
+
+                        return actions;
+                    }
+                },
             ]
         });
 
@@ -199,7 +211,7 @@
 
         // ajax get data show
         $.ajax({
-            url: "/api/trades/" + parsed.id,
+            url: "/api/trades/public/" + parsed.id,
             type: "GET",
             data: {
                 'page_show': 'show'

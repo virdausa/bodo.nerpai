@@ -58,6 +58,95 @@ class JournalSupplyController extends Controller
 
 
 
+    public function requestTrade(Request $request, $id)
+    {
+        // create new journal supply, based on trades
+        $trade = Transaction::with(['details', 'details.detail', 'input', 'outputs', 'sender', 'receiver'])->findOrFail($id);
+        $player_id = get_player_id($request);
+
+
+        $js_space_id = get_variable('space.trades.request_trade.space_id') ?? null;
+        if(!$js_space_id){
+            return back()->with('error', 'Space untuk request trade belum diatur, silahkan hubungi admin');
+        }
+        $trade_space = Space::with('children', 'children.variables')->findOrFail($trade->space_id);
+        $js_space_valid = $trade_space->children->where('id', $js_space_id)->first() || $trade_space->id == $js_space_id;
+        if(!$js_space_valid){
+            return back()->with('error', 'Space untuk yang diatur tidak punya hak akses, silahkan hubungi admin');
+        }
+        
+
+
+        $js_data = [
+            'space_id' => $js_space_id,
+            'sender_id' => $player_id,
+            'sent_time' => now(),
+            'sender_notes' => 'Request Trade ' . $trade->number,
+        ];
+
+        $js = $this->journalSupply->addJournal($js_data);
+        $js->relation_type = 'TX';
+        $js->relation_id = $trade->id;
+        $js->save();
+
+
+        // details
+        $trd_details = $trade->details;
+        $js_details = collect();
+        foreach($trd_details as $trd_detail){
+            $item = $trd_detail->detail;
+
+            // check for supply
+            $supply = Inventory::where('model_type', 'SUP')
+                ->where('item_type', 'ITM')
+                ->where('space_type', 'SPACE')
+                ->where('space_id', $js_space_id);
+
+
+            // check supply exists
+            $supply = $supply->where('item_id', $item->id)
+                    ->first();
+
+
+            // create supply if not exist
+            if (!$supply) {
+                continue;
+
+                $supply = Inventory::create([
+                    'space_type' => 'SPACE',
+                    'space_id' => $space_id,
+
+                    'sku' => $item->sku,
+                    'name' => $item->name,
+                    'item_id' => $item->id,
+                    'cost_per_unit' => $item->cost,
+
+                    'model_type' => 'SUP',
+                    'item_type' => 'ITM',
+                    'parent_type' => 'IVT',
+                ]);
+            }
+
+            $js_details->push([
+                'detail_id' => $supply->id,
+                'model_type' => $trd_detail['model_type'] ?? 'UNDF',
+                'quantity' => $trd_detail['quantity'] ?? 0,
+                'cost_per_unit' => $supply->cost_per_unit ?? 0,
+                'notes' => $trd_detail['notes'] ?? null,
+            ]);
+        }
+        $js = $this->journalSupply->updateJournal($js, $js_data, $js_details->toArray());
+        // dd($js_data, $js_details);
+
+
+        $trade->status = 'TX_READY';
+        $trade->save();
+
+        return redirect()->route('trades.show', $trade->id);
+    }
+
+
+
     public function get_inventories()
     {
         $space_id = session('space_id') ?? null;

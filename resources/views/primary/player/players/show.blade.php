@@ -153,7 +153,7 @@
 
         // ajax get data show
         $.ajax({
-            url: "/api/trades/" + parsed.id,
+            url: "/api/trades/public/" + parsed.id,
             type: "GET",
             data: {
                 'page_show': 'show'

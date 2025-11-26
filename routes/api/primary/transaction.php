@@ -39,7 +39,13 @@ Route::middleware([
 
         Route::get('/{id}/invoice', 'invoice')->name('api.trades.invoice');
     });
-    Route::resource('trades', TradeController::class);
+
+
+    // Route::resource('trades', TradeController::class);
+    // 👇 ROUTE PUBLIC TANPA SANCTUM
+    Route::get('trades/public/{trade}', [TradeController::class, 'show'])
+        ->name('trades.public.show');
+
 });
 
 
@@ -50,4 +56,5 @@ Route::middleware([
 ])->group(function () {
     Route::resource('journal_accounts', JournalAccountController::class);
     Route::resource('journal_supplies', JournalSupplyController::class);
+    Route::resource('trades', TradeController::class);
 });

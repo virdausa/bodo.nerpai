@@ -61,10 +61,12 @@
                                 </x-table.table-tbody>
                             </x-table.table-table>
 
+                            @if($journal->status == 'TX_DRAFT')
                             <div class="mb-4">
                                 <x-button2 type="button" id="add-detail" class="mr-3 m-4">Add Journal
                                     Detail</x-button2>
                             </div>
+                            @endif
 
                             <div class="my-6 flex-grow border-t border-gray-300 dark:border-gray-700"></div>
                             <div class="flex justify-end space-x-4">

@@ -36,6 +36,15 @@ class TradeController extends Controller
 
 
 
+    public function commerceData(Request $request){
+        $q = $request->get('email');
+        $request->q = $q;  
+
+        return $this->tradeService->getData($request);
+    }
+
+
+
     public function getData(Request $request){
         return $this->tradeService->getData($request);
     }
@@ -400,10 +409,16 @@ class TradeController extends Controller
 
 
 
+        $space_id = $tx->space_id;
+        $space = Space::with('children', 'children.variables')
+                        ->findOrFail($space_id);
+
+
+
         // tx related
         $data = $tx;
         $tx_related = $data->outputs ?? collect();
-        if($data->input){
+        if(isset($data->input)){
             $tx_related->push($data->input);
         }
 
@@ -411,7 +426,7 @@ class TradeController extends Controller
         //     $tx_related->push($data->parent);
         // }
 
-        if($data->children){
+        if(isset($data->children)){
             $tx_related = $tx_related->merge($data->children);
         }
 
@@ -436,7 +451,7 @@ class TradeController extends Controller
 
 
 
-        return view('primary.transaction.trades.show', compact('tx', 'tx_related'));
+        return view('primary.transaction.trades.show', compact('tx', 'tx_related', 'space'));
     }
 
 

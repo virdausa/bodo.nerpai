@@ -9,6 +9,7 @@ use App\Http\Controllers\Primary\Player\TeamController;
 
 
 Route::middleware([
+    // 'auth:sanctum',
 ])->group(function () {
     // player
     Route::get('players/spaces', [PlayerController::class, 'getRelatedSpaces'])->name('players.spaces');

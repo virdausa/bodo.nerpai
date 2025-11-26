@@ -259,10 +259,18 @@ class TradeService
                     $route = 'trades';
 
                     $actions = [
+                        // 'send' => 'button',
                         'show' => 'modaljs',
                         'edit' => 'button',
                         'delete' => 'button',
                     ];
+
+
+                    // jika status bukan draft, unset send
+                    if($data->status != 'TX_DRAFT'){
+                        unset($actions['send']);
+                        unset($actions['delete']);
+                    }
 
 
                     // jika punya input atau children, maka tidak bisa dihapus
@@ -314,6 +322,7 @@ class TradeService
                                 ->orWhere('transactions.number', 'like', "%{$search}%")
                                 ->orWhere('transactions.sender_notes', 'like', "%{$search}%")
                                 ->orWhere('transactions.handler_notes', 'like', "%{$search}%")
+                                ->orWhere('transactions.receiver_notes', 'like', "%{$search}%")
 
                                 ->orWhere('transactions.status', 'like', "%{$search}%")
                                 ;

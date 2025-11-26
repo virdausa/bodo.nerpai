@@ -1,5 +1,6 @@
 @props([
     'actions' => [
+        'send' => '',
         'show' => '',
         'show_modal' => '',
         'edit' => '',
@@ -10,6 +11,8 @@
 ])
 
 @php
+    $actions['send'] = $actions['send'] ?? '';
+
     $actions['show'] = $actions['show'] ?? '';
     $actions['show_modal'] = $actions['show_modal'] ?? '';
     $actions['edit'] = $actions['edit'] ?? '';
@@ -20,6 +23,12 @@
 @endphp
 
 <div class="flex gap-3 justify-end">
+    @if($actions['send'] == 'button')        
+        <!-- request outbound from warehouse -->
+        <x-buttons.button-pass :route="route('journal_supplies.request_trade', $data->id)">Request Kirim</x-buttons.button-pass>
+    @endif
+
+
     @if($actions['show'] == 'modal')
         @if($actions['show_modal'] != '')
             @include($actions['show_modal'], ['data' => $data])
