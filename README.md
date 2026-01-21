@@ -1,4 +1,4 @@
-<p align="center"><a href="https://nerpai.space" target="_blank"><img src="https://app.nerpai.space/svg/hehe.svg" width="200" alt="Nerpai Logo"></a></p>
+<p align="center"><a href="https://nerpai.app" target="_blank"><img src="https://app.nerpai.app/svg/hehe.svg" width="200" alt="Nerpai Logo"></a></p>
 
 <p align="center">
 <a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
@@ -33,12 +33,12 @@ Join our discord, or Whatsapp team :D
 
 ## Nerpai Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Nerpai development. If you are interested in becoming a sponsor, please visit the [Nerpai Partners program](https://partners.nerpai.space).
+We would like to extend our thanks to the following sponsors for funding Nerpai development. If you are interested in becoming a sponsor, please visit the [Nerpai Partners program](https://partners.nerpai.app).
 
 
 ### Premium Partners
 
-- **[Jawir Team - Nerpai Foundation](https://nerpai.space/)**
+- **[Jawir Team - Nerpai Foundation](https://nerpai.app/)**
 - **[Haebot](https://haebot.com)**
 - **[LinCie](https://link.lincie.me)**
 - **[Fuhrer](https://maps.app.goo.gl/sc1ybXHuELae5tF87)**

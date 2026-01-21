@@ -403,7 +403,7 @@ class ItemController extends Controller
 
 
             // handling images jika ada images masuk
-            if($request->hasFile('images')) {
+            if($request->hasFile('images') || $request->has('old_images')){
                 // Ambil file lama yang masih dipertahankan
                 $oldImages = $request->input('old_images', []); // array path lama
     
@@ -841,8 +841,48 @@ class ItemController extends Controller
         }
 
 
+
+        // calculate product in shipping
+        // $po_trades_in_sent = Transaction::with('input', 'type', 'details', 'details.detail',
+        //                                         'relations')
+        //                                 ->where('model_type', 'TRD')
+        //                                 ->where('space_type', 'SPACE')
+        //                                 ->where('space_id', $space_id)
+        //                                 ->whereIn('status', ['TX_READY', 'TX_SENt'])
+        //                                 ->whereHas('details', function($q){
+        //                                     $q->where('model_type', 'PO');
+        //                                 })
+        //                                 ->limit(10);
+        //                                 ;
+        // dd($po_trades_in_sent->get());
+        $items_in_shipping = DB::table('transaction_details as td')
+                                ->join('transactions as t', 't.id', '=', 'td.transaction_id')
+                                ->join('items as p', 'p.id', '=', 'td.detail_id') // ganti 'products' sesuai tabel detail kamu
+                                ->where('t.model_type', 'TRD')
+                                ->where('t.space_type', 'SPACE')
+                                ->where('t.space_id', $space_id)
+                                ->whereIn('t.status', ['TX_READY', 'TX_SENT'])
+                                ->where('td.model_type', 'PO')
+                                ->groupBy('p.id', 'p.sku', 'p.name')
+                                ->select(
+                                    'p.id',
+                                    'p.sku',
+                                    'p.name',
+                                    DB::raw('SUM(td.quantity) as qty')
+                                )
+                                ->whereNull('t.deleted_at')
+                                ->whereNull('td.deleted_at')
+                                ->get();
+        $items_in_shipping_id = $items_in_shipping->keyBy('id');
+        // dd($items_in_shipping_id[188]->qty);
+
+
+        $columns[] = 'in shipping restock';
+
+
+
         try {
-            $callback = function () use ($items, $columns, $spaces) {
+            $callback = function () use ($items, $columns, $spaces, $items_in_shipping_id) {
                 $file = fopen('php://output', 'w');
                 fputcsv($file, $columns);
 
@@ -867,6 +907,12 @@ class ItemController extends Controller
                         $ivt = $ivts->where('space_id', $space->id)->first() ?? new Inventory();
                         $row[] = $ivt?->balance ?? 0;
                         $row[] = $ivt?->cost_per_unit ?? 0;
+                    }
+
+                    if(isset($items_in_shipping_id[$item->id])){
+                        $row[] = $items_in_shipping_id[$item->id]->qty;
+                    } else {
+                        $row[] = 0;
                     }
 
                     fputcsv($file, $row);

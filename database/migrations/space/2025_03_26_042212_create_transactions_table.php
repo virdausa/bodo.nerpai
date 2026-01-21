@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('space_id')->nullable();
             $table->string('model_type')->nullable();
             $table->unsignedBigInteger('model_id')->nullable();
+            $table->string('model_subtype')->nullable();
 
             $table->string('type_type')->nullable();
             $table->unsignedBigInteger('type_id')->nullable();
@@ -67,6 +68,10 @@ return new class extends Migration
             $table->json('files')->nullable();
             $table->json('tags')->nullable();
             $table->json('links')->nullable();
+
+            $table->json('timestamps')->nullable();
+            $table->json('addresses')->nullable();
+            $table->json('players')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

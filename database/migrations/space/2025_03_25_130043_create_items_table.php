@@ -33,6 +33,7 @@ return new class extends Migration
             // Attributes
             $table->string('name');
             $table->decimal('price', 20, 2)->default(0);
+            $table->decimal('price_discount', 20, 2)->default(0);
             $table->decimal('cost', 20, 2)->default(0);
 
             $table->decimal('weight', 10, 2)->default(0);

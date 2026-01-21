@@ -16,7 +16,7 @@ class CourierSeeder extends Seeder
             'code' => 'nex',
             'name' => 'Nerpai Express',
             'contact_info' => '08123456789',
-            'website' => 'https://express.nerpai.space',
+            'website' => 'https://express.nerpai.app',
             'status' => 'active',
             'notes' => 'Seeder',
         ]);

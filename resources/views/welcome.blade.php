@@ -25,7 +25,7 @@
                 <p class="text-2xl text-center text-gray-500">Your go-to destination for a highly
                     performant, highly adaptive ERP solution</p>
                 <div class="flex space-x-4 mt-4">
-                    <a href="https://nerpai.space"
+                    <a href="https://nerpai.app"
                         class="bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/80">Website</a>
                     @if (Route::has('login'))
                         @auth
@@ -39,7 +39,7 @@
                         @endauth
                     @endif
 
-                    <a href="https://app.nerpai.space" target="_blank"
+                    <a href="https://app.nerpai.app" target="_blank"
                         class="bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/80">Bodo Versi 2.0 (BETA)</a>
                 </div>
             </div>

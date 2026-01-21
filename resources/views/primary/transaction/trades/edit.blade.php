@@ -518,8 +518,8 @@
             const option = new Option(journal.receiver.name, journal.receiver.id, true, true);
             $("#edit_receiver_id").append(option).trigger('change');
             $('#edit_receiver_address').html(journal.receiver.email + ': ' + journal.receiver.phone_number + ' <br> ' + journal.receiver.address);
-            $("#edit_receiver_notes").val(journal.receiver_notes);
         }
+        $("#edit_receiver_notes").val(journal.receiver_notes); 
 
 
         if(journal.parent){
