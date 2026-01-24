@@ -171,7 +171,7 @@ class TradeService
                 'weight' => $detail['weight'],
             ];
 
-            $change = $detail['quantity'] * $detail['price'] * (1 - $detail['discount']);
+            $change = $detail['quantity'] * ($detail['price'] - $detail['discount']);
             $balance_change += $change;
             
 

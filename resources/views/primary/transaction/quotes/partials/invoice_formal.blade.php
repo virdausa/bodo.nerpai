@@ -203,14 +203,14 @@
                     <td class="text-center">{{ $qty }}</td>
                     <td class="text-right">{{ number_format($detail->detail?->weight) }}</td>
                     <td class="text-right">Rp. {{ number_format($price) }}</td>
-                    <td class="text-right">( {{ $detail->discount * 100 }}%) {{ number_format($detail->discount * $price) }}</td>
-                    <td class="text-right">{{ number_format($qty * $price * (1 - $detail->discount)) }}</td>
+                    <td class="text-right">( {{ number_format($detail->discount / $price, 2) * 100 }}%) {{ number_format($detail->discount) }}</td>
+                    <td class="text-right">{{ number_format($qty * ($price - $detail->discount)) }}</td>
                 </tr>
 
                     @php
                         $total_weight += $detail->detail?->weight * $qty;
                         $total_product += $qty * $price;
-                        $total_discount += $detail->discount * $price * $qty;
+                        $total_discount += $detail->discount * $qty;
                     @endphp
                 @endforeach
                 <!-- Total berat -->

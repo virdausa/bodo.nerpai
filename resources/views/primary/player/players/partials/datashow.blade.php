@@ -151,9 +151,9 @@
                         <x-table.table-td>{{ $detail->model_type ?? 'type' }}</x-table.table-td>
                         <x-table.table-td>{{ number_format($detail->quantity, 0) }}</x-table.table-td>
                         <x-table.table-td class="py-4">{{ number_format($detail->price) }}</x-table.table-td>
-                        <x-table.table-td class="py-4">{{ number_format($detail->discount * 100) }}%</x-table.table-td>
-                        <x-table.table-td>{{ number_format($detail->price * $detail->discount) }}</x-table.table-td>
-                        <x-table.table-td>{{ number_format($detail->quantity * $detail->price * (1 - $detail->discount)) }}</x-table.table-td>
+                        <x-table.table-td class="py-4">{{ number_format($detail->discount) }}%</x-table.table-td>
+                        <x-table.table-td>{{ number_format($detail->discount) }}</x-table.table-td>
+                        <x-table.table-td>{{ number_format($detail->quantity * ($detail->price - $detail->discount)) }}</x-table.table-td>
                         <x-table.table-td>{{ $detail->notes ?? 'N/A' }}</x-table.table-td>
                     </x-table.table-tr>
                 @endforeach

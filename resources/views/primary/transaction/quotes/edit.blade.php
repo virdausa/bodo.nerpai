@@ -285,7 +285,7 @@
                         <input type="text" size="5" name="details[${rowIndex}][price]" class="price-input w-25" value="${formatNumberNoTrailingZeros(price)}" default="0" min="0">
                     </td>
                     <td>
-                        <input type="text" size="3" name="details[${rowIndex}][discount]" class="discount-input w-25" value="${formatNumberNoTrailingZeros(discount)}" default="0" min="0">
+                        <input type="text" size="5" name="details[${rowIndex}][discount]" class="discount-input w-25" value="${formatNumberNoTrailingZeros(discount)}" default="0" min="0">
                     </td>
                     <td>
                         <textarea name="details[${rowIndex}][notes]" class="notes-input">${notes}</textarea>
@@ -563,7 +563,7 @@
                 const quantity = parseFloat($(this).val()) || 0;
                 const price = parseFloat($(this).closest('tr').find('.price-input').val()) || 0;
                 const discount = parseFloat($(this).closest('tr').find('.discount-input').val()) || 0;
-                const subtotal = quantity * price * (1 - discount);
+                const subtotal = quantity * (price - discount);
                 if (quantity < 0) {
                     totalDebit += subtotal;
                 } else {

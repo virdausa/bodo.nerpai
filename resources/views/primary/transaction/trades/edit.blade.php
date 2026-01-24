@@ -574,7 +574,7 @@
                 const quantity = parseFloat($(this).val()) || 0;
                 const price = parseFloat($(this).closest('tr').find('.price-input').val()) || 0;
                 const discount = parseFloat($(this).closest('tr').find('.discount-input').val()) || 0;
-                const subtotal = quantity * price * (1 - discount);
+                const subtotal = quantity * (price - discount);
                 if (quantity < 0) {
                     totalDebit += subtotal;
                 } else {

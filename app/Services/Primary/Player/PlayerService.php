@@ -65,7 +65,7 @@ class PlayerService
             foreach($txs as $tx){
                 foreach($tx->details as $detail){
                     // tx
-                    $per_date_change[$detail->model_type] += $detail->quantity * $detail->price * (1 - $detail->discount);
+                    $per_date_change[$detail->model_type] += $detail->quantity * ($detail->price - $detail->discount);
                 }
             }
 
@@ -120,7 +120,7 @@ class PlayerService
                         }
 
                         $items[$item->id][$detail->model_type]['quantity'] += $detail->quantity;
-                        $items[$item->id][$detail->model_type]['subtotal'] += $detail->quantity * $detail->price * (1 - $detail->discount);
+                        $items[$item->id][$detail->model_type]['subtotal'] += $detail->quantity * ($detail->price - $detail->discount);
                     }
                 }
             }
